@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    command: npm run dev
+    ports:
+      - 3000:3000
+    environment:
+      - PG_PASSWORD=1234
+      - PG_DB=kenziemarket
+      - PG_USER=postgres
+      - PG_HOST=db
+    volumes:
+      - .:/code
+  db:
+    image: postgres:14
+    environment:
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=kenziemarket
+    ports:
+      - 5432:5432
