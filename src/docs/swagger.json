@@ -8,6 +8,10 @@
         {
             "url": "http://localhost:3000/",
             "description": "Local Server"
+        },
+        {
+            "url": "https://kenzmarket.herokuapp.com/",
+            "description": "Production"
         }
     ],
     "paths": {
