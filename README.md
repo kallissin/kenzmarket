@@ -41,3 +41,12 @@ yarn typeorm migration:run
 ```
 
 
+## **EndPoints**
+
+A rota `User` tem por objetivo cadastrar um usuário, visuálizar todos os usuários cadastrados ou um usuário específico. Se voce for um administrador, poderá visualizar todos os perfis, caso contrário, poderá visualizar somente o seu.
+
+A rota de `produtos` tem por objetivo cadastrar os produtos no sistema, porem somente administradores podem cadastrar. Alem disso, é possível visualizar todos os produtos ou somente um em específico. É interessante salientar que quando for cadastrar um produto você pode escolher a quantidade que deseja colocar em stock.
+
+A rota `cart` é responsável por adicionar um determinado produto com uma determinada quantidade em seu carrinho. Alem de ser possível de visualizar o mesmo. Os administradores podem visualizar todos os carrinhos, diferente dos usuários comuns que conseguem visualizar apenas o seu próprio.
+
+tem uma rota `/api/cart/item_id`, esta rota foi criada especificamente assim, pois  o usuário pode adicionar em seu carrinho mais de uma quantidade de um mesmo produto. E esta rota é destinada a deletar este item.
