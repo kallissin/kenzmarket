@@ -3,9 +3,9 @@ import { listProductById } from '../services/listProductById.service';
 
 export const productById = async (req: Request, res: Response) => {
     try {
-        const { id } = req.params;
+        const productId = req.params.id;
 
-        const product = await listProductById({id});
+        const product = await listProductById({productId});
 
         return res.status(200).json(product);
     } catch(error) {

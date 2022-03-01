@@ -3,7 +3,10 @@ import { Product } from "../entities";
 
 @EntityRepository(Product)
 export class ProductRepository extends Repository<Product> {
-    findById(id: string) {
-        return this.findOne({id})
+    findById(productId: string) {
+        return this.findOne({productId})
+    }
+    findByName(name: string) {
+        return this.findOne({name})
     }
 }

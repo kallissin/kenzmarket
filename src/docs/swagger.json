@@ -1,0 +1,948 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Kenzie Market",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/",
+            "description": "Local Server"
+        }
+    ],
+    "paths": {
+        "/api/users": {
+            "get": {
+                "description": "List all Users",
+                "responses": {
+                    "200": {
+                        "description": "List Users",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserCreateSchema"
+                                },
+                                "examples": {
+                                    "users": {
+                                        "value": [
+                                            {   
+                                                "name": "kelvin",
+                                                "email": "kelvin@email.com",
+                                                "isAdm": true,
+                                                "userId": "7c6811f7-4601-49c8-88a6-11ce740b7498",
+                                                "createdOn": "2022-03-01T00:42:11.316Z",
+                                                "updatedOn": "2022-03-01T00:42:11.316Z"
+                                            },
+                                            {
+                                                "name": "maria",
+                                                "email": "maria@email.com",
+                                                "isAdm": true,
+                                                "userId": "7c6811f7-4601-49c8-88a6-11ce740b7497",
+                                                "createdOn": "2022-03-01T00:42:11.316Z",
+                                                "updatedOn": "2022-03-01T00:42:11.316Z"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Failed list Users",
+                        "content" : {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatusErrorSchema"
+                                },
+                                "examples": {
+                                    "401": {
+                                        "value": {
+                                            "error": "Missing authorization headers"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new User",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserCreateSchema"
+                            },
+                            "examples": {
+                                "user": {
+                                    "value": {
+                                        "name": "kelvin",
+                                        "email": "kelvin@email.com",
+                                        "isAdm": true,
+                                        "password": "123456"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created User",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserCreateSchema"
+                                },
+                                "examples": {
+                                    "user": {
+                                        "value": {
+                                            "email": "kelvin@email.com",
+                                            "name": "kelvin",
+                                            "isAdm": true,
+                                            "userId": "7c6811f7-4601-49c8-88a6-11ce740b7497",
+                                            "createdOn": "2022-03-01T00:42:11.316Z",
+                                            "updatedOn": "2022-03-01T00:42:11.316Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to create user",
+                        "content" : {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatusErrorSchema"
+                                },
+                                "examples": {
+                                    "400": {
+                                        "value": {
+                                            "error": "required field"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Failed to create user",
+                        "content" : {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatusErrorSchema"
+                                },
+                                "examples": {
+                                    "409": {
+                                        "value": {
+                                            "error": "Email already exists"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {}
+                ]
+            }
+        },
+        "/api/users/{id}": {
+            "get": {
+                "description": "List Profile",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do usuário",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List Profile",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserCreateSchema"
+                                },
+                                "examples": {
+                                    "user": {
+                                        "value": {   
+                                            "name": "kelvin",
+                                            "email": "kelvin@email.com",
+                                            "isAdm": true,
+                                            "userId": "7c6811f7-4601-49c8-88a6-11ce740b7498",
+                                            "createdOn": "2022-03-01T00:42:11.316Z",
+                                            "updatedOn": "2022-03-01T00:42:11.316Z",
+                                            "cart": {
+                                                "cartId": "ce1785b8-e22a-438a-8289-bce3888f1fed",
+                                                "updatedOn": "2022-03-01T15:44:14.348Z",
+                                                "total": 0
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Failed list Profile",
+                        "content" : {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatusErrorSchema"
+                                },
+                                "examples": {
+                                    "401": {
+                                        "value": {
+                                            "error": "Missing authorization headers"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed list Profile",
+                        "content" : {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatusErrorSchema"
+                                },
+                                "examples": {
+                                    "404": {
+                                        "value": {
+                                            "error": "User not found"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "description": "Loggin",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginSchema"
+                            },
+                            "examples": {
+                                "user": {
+                                    "value": {
+                                        "email": "kelvin@email.com",
+                                        "password": "123456"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Created User",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "token": {
+                                        "value": {
+                                            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlMGQ1MmQyNS1mODFjLTRlNDItODhlNi05NGQ0NmI4Mzc5NDAiLCJpc0FkbSI6dHJ1ZSwiY2FydElkIjoiZTI2OTE1YmQtYzM4NC00NGQwLWFjNDctN2YzNzU1MGE3ZGEyIiwiaWF0IjoxNjQ2MTQwMjY1LCJleHAiOjE2NDYyMjY2NjV9.p9L87VgiP2ce2dnfbDnHt3dKSbL07rP57DvDLORB8Mo"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to logged user",
+                        "content" : {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatusErrorSchema"
+                                },
+                                "examples": {
+                                    "400": {
+                                        "value": {
+                                            "error": "required field"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Failed to logged user",
+                        "content" : {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatusErrorSchema"
+                                },
+                                "examples": {
+                                    "401": {
+                                        "value": {
+                                            "error": "Wrong email/password"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {}
+                ]
+            }
+        },
+        "/api/product": {
+            "get": {
+                "description": "List products",
+                "responses": {
+                    "200": {
+                        "description": "List products",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductCreateSchema"
+                                },
+                                "examples": {
+                                    "users": {
+                                        "value": [
+                                            {
+                                                "productId": "d007ef3f-6d72-4c7c-b4c9-f5df4d02c130",
+                                                "name": "notebook dell M752",
+                                                "stock": 20,
+                                                "price": 4000.99
+                                            },
+                                            {
+                                                "productId": "372e1957-0f52-4cf8-912e-f35acf376a87",
+                                                "name": "monitor 20'",
+                                                "stock": 30,
+                                                "price": 1250.99
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Failed list Products",
+                        "content" : {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatusErrorSchema"
+                                },
+                                "examples": {
+                                    "401": {
+                                        "value": {
+                                            "error": "Missing authorization headers"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new Product",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProductCreateSchema"
+                            },
+                            "examples": {
+                                "user": {
+                                    "value": {
+                                        "name": "notebook acer 1020",
+                                        "stock": 50,
+                                        "price": 1500.00
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created User",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductCreateSchema"
+                                },
+                                "examples": {
+                                    "user": {
+                                        "value": {
+                                            "name": "notebook acer 1020",
+                                            "stock": 50,
+                                            "price": 1500.00,
+                                            "productId": "372e1957-0f52-4cf8-912e-f35acf376a87"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to create product",
+                        "content" : {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatusErrorSchema"
+                                },
+                                "examples": {
+                                    "400": {
+                                        "value": {
+                                            "error": "required field"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Failed to create user",
+                        "content" : {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatusErrorSchema"
+                                },
+                                "examples": {
+                                    "409": {
+                                        "value": {
+                                            "error": "name already exists"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/product/{id}": {
+            "get": {
+                "description": "List Product",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do produto",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List Product",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductCreateSchema"
+                                },
+                                "examples": {
+                                    "user": {
+                                        "value": {
+                                            "productId": "372e1957-0f52-4cf8-912e-f35acf376a87",
+                                            "name": "notebook acer",
+                                            "stock": 30,
+                                            "price": 4000.99
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Failed list Product",
+                        "content" : {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatusErrorSchema"
+                                },
+                                "examples": {
+                                    "401": {
+                                        "value": {
+                                            "error": "Missing authorization headers"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed list Product",
+                        "content" : {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatusErrorSchema"
+                                },
+                                "examples": {
+                                    "404": {
+                                        "value": {
+                                            "error": "product not found"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/cart": {
+            "get": {
+                "description": "List Cart",
+                "responses": {
+                    "200": {
+                        "description": "List Cart",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CartCreateSchema"
+                                },
+                                "examples": {
+                                    "users": {
+                                        "value": [
+                                            {
+                                                "cartId": "955135eb-4593-4990-9093-2306e5173009",
+                                                "updatedOn": "2022-02-28T23:36:02.615Z",
+                                                "total": 0,
+                                                "items": []
+                                            },
+                                            {
+                                                "cartId": "639093cc-e55a-4c64-aff1-04b6f8a9f5e7",
+                                                "updatedOn": "2022-03-01T00:59:59.616Z",
+                                                "total": 5500,
+                                                "items": [
+                                                    {
+                                                        "itemId": "5354bc9c-747a-4589-af47-702ccb88815b",
+                                                        "quantity": 1,
+                                                        "product": {
+                                                            "productId": "d007ef3f-6d72-4c7c-b4c9-f5df4d02c130",
+                                                            "name": "notebook acer 1030",
+                                                            "stock": 49,
+                                                            "price": 1500
+                                                        }
+                                                    },
+                                                    {
+                                                        "itemId": "fbe30dd9-86d4-4681-85e9-ee2ea37b3200",
+                                                        "quantity": 1,
+                                                        "product": {
+                                                            "productId": "372e1957-0f52-4cf8-912e-f35acf376a87",
+                                                            "name": "notebook acer 1020",
+                                                            "stock": 49,
+                                                            "price": 4000
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Failed list Carts",
+                        "content" : {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatusErrorSchema"
+                                },
+                                "examples": {
+                                    "401": {
+                                        "value": {
+                                            "error": "Missing authorization headers"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Add product in Cart",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CartCreateSchema"
+                            },
+                            "examples": {
+                                "item": {
+                                    "value": {
+                                        "name": "notebook acer 1020",
+                                        "quantity": 1
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Added product to Cart",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CartCreateSchema"
+                                },
+                                "examples": {
+                                    "cart": {
+                                        "value": {
+                                            "cartId": "639093cc-e55a-4c64-aff1-04b6f8a9f5e7",
+                                            "updatedOn": "2022-03-01T00:59:38.197Z",
+                                            "total": 1500,
+                                            "items": [
+                                                {
+                                                    "itemId": "5354bc9c-747a-4589-af47-702ccb88815b",
+                                                    "quantity": 1,
+                                                    "product": {
+                                                        "productId": "d007ef3f-6d72-4c7c-b4c9-f5df4d02c130",
+                                                        "name": "notebook acer 1030",
+                                                        "stock": 49,
+                                                        "price": 1500
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to added product",
+                        "content" : {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatusErrorSchema"
+                                },
+                                "examples": {
+                                    "400": {
+                                        "value": {
+                                            "error": "required field"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Failed to added product",
+                        "content" : {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatusErrorSchema"
+                                },
+                                "examples": {
+                                    "409": {
+                                        "value": {
+                                            "error": "There is no required amount of this product"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/cart/{id}": {
+            "get": {
+                "description": "List Cart",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do cart",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List Cart",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CartCreateSchema"
+                                },
+                                "examples": {
+                                    "user": {
+                                        "value": {
+                                            "cartId": "955135eb-4593-4990-9093-2306e5173009",
+                                            "updatedOn": "2022-02-28T23:36:02.615Z",
+                                            "total": 0,
+                                            "items": []
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Failed list Cart",
+                        "content" : {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatusErrorSchema"
+                                },
+                                "examples": {
+                                    "401": {
+                                        "value": {
+                                            "error": "Missing authorization headers"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed list Cart",
+                        "content" : {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatusErrorSchema"
+                                },
+                                "examples": {
+                                    "404": {
+                                        "value": {
+                                            "error": "Cart not found"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/cart/{item_id}": {
+            "delete": {
+                "description": "delete Item",
+                "parameters": [
+                    {
+                        "name": "item_id",
+                        "in": "path",
+                        "description": "ID do item",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Delete Item",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Failed list Cart",
+                        "content" : {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatusErrorSchema"
+                                },
+                                "examples": {
+                                    "401": {
+                                        "value": {
+                                            "error": "Missing authorization headers"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed delete Item",
+                        "content" : {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatusErrorSchema"
+                                },
+                                "examples": {
+                                    "404": {
+                                        "value": {
+                                            "error": "Item not found"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "UserCreateSchema": {
+                "type": "object",
+                "properties": {
+                    "userId": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "isAdm": {
+                        "type": "boolean"
+                    },
+                    "password": {
+                        "type": "string",
+                        "writeOnly": true
+                    },
+                    "createdOn": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "updatedOn": {
+                        "type": "string",
+                        "readOnly": true
+                    }
+                }
+            },
+            "UserProfileSchema": {
+                "type": "object",
+                "properties": {
+                    "userId": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "isAdm": {
+                        "type": "boolean"
+                    },
+                    "password": {
+                        "type": "string",
+                        "writeOnly": true
+                    },
+                    "createdOn": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "updatedOn": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "cart": {
+                        "type": "object",
+                        "readOnly": true
+                    }
+                }
+            },
+            "StatusErrorSchema": {
+                "type": "object",
+                "properties": {
+                    "error": {
+                        "type": "string"
+                    }
+                }    
+            },
+            "LoginSchema": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string",
+                        "writeOnly": true
+                    }
+                }
+            },
+            "ProductCreateSchema": {
+                "type": "object",
+                "properties": {
+                    "productId": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "stock": {
+                        "type": "integer"
+                    },
+                    "price": {
+                        "type": "number"
+                    }
+                }
+            },
+            "CartCreateSchema": {
+                "type": "object",
+                "properties": {
+                    "cartId": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "quantity": {
+                        "type": "integer"
+                    },
+                    "updateOn": {
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "total": {
+                        "type": "number",
+                        "readOnly": true
+                    },
+                    "items": {
+                        "type": "array",
+                        "readOnly": true
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "JWT": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
+    "security": [
+        {
+            "JWT": []
+        }
+    ]
+}

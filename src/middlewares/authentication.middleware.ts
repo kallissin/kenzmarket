@@ -7,8 +7,9 @@ const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
         if (err) {
             return res.status(401).json({message: "Missing authorization headers"})
         }
-        const { id, isAdm } = decoded;
-        req.user = { id: id, isAdm: isAdm};
+        console.log(decoded)
+        const { userId, isAdm, cartId } = decoded;
+        req.user = { userId: userId, isAdm: isAdm, cartId: cartId};
         next()
     })
 }

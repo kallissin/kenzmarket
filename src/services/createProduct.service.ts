@@ -4,15 +4,15 @@ import AppError from "../errors/AppError";
 
 interface IProps {
     name: string,
-    quantity: number,
+    stock: number,
     price: number
 }
 
-export const createProduct = async ({ name, quantity, price }: IProps) => {
+export const createProduct = async ({ name, stock, price }: IProps) => {
     try {
 
         const productRepository = getCustomRepository(ProductRepository);
-        const product = productRepository.create({ name, quantity, price });
+        const product = productRepository.create({ name, stock, price });
         await productRepository.save(product);
         return product
     } catch(error) {

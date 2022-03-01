@@ -4,12 +4,12 @@ import AppError from "../errors/AppError";
 
 
 interface IProps {
-    productId: string,
+    name: string,
 }
 
-export const listProductById = async ({productId}: IProps) => {
+export const listProductByName = async ({name}: IProps) => {
     const productRepository = getCustomRepository(ProductRepository);
-    const product = await productRepository.findById(productId);
+    const product = await productRepository.findByName(name);
 
     if (!product) {
         throw new AppError("product not found", 404);

@@ -1,11 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BeforeInsert, OneToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BeforeInsert} from "typeorm";
 import bcrypt from 'bcrypt';
-import Cart from "./Cart";
+
 
 @Entity('Users')
 export default class User {
     @PrimaryGeneratedColumn('uuid')
-    id!: string;
+    userId!: string;
 
     @Column({ unique: true })
     email!: string;
@@ -29,7 +29,4 @@ export default class User {
     hashPassword() {
         this.password = bcrypt.hashSync(this.password, 10)
     }
-
-    @OneToOne(type => Cart) @JoinColumn()
-    cart!: Cart;
 }

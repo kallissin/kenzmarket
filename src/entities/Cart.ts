@@ -1,11 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, UpdateDateColumn, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, UpdateDateColumn, OneToMany, OneToOne, JoinColumn } from 'typeorm';
+import User from './User';
 import Item from './Item';
 
 
 @Entity('Carts')
 export default class Cart {
     @PrimaryGeneratedColumn('uuid')
-    id!: string;
+    cartId!: string;
 
 
     @UpdateDateColumn()
@@ -16,6 +17,9 @@ export default class Cart {
     total!: number;
 
     
-    @OneToMany(type => Item, item => item.cart)
+    @OneToMany(() => Item, item => item.cart)
     items!:Item[]
+
+    @OneToOne(() => User) @JoinColumn()
+    user!: User;
 }

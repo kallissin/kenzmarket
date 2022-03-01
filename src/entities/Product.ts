@@ -4,7 +4,7 @@ import Item from "./Item";
 @Entity('Products')
 export default class Product {
     @PrimaryGeneratedColumn('uuid')
-    id!: string;
+    productId!: string;
 
 
     @Column({ unique: true })

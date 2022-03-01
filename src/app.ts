@@ -1,7 +1,8 @@
 import express from 'express';
 import { InitializerRouter } from './router';
 import { connectDatabase } from './database';
-
+import swaggerUiExpress from 'swagger-ui-express';
+import swaggerDocument from './docs/swagger.json';
 import "reflect-metadata";
 
 connectDatabase();
@@ -9,10 +10,7 @@ connectDatabase();
 const app = express();
 
 app.use(express.json())
-
-app.get('/', (req, res) => {
-    res.json({message: "Hello world!"});
-})
+app.use('/api-docs', swaggerUiExpress.serve, swaggerUiExpress.setup(swaggerDocument));
 
 InitializerRouter(app);
 
