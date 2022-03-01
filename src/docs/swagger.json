@@ -256,7 +256,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Created User",
+                        "description": "Logged User",
                         "content": {
                             "application/json": {
                                 "examples": {
